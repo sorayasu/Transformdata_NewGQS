@@ -1,0 +1,105 @@
+{
+    "type": "object",
+    "properties": {
+        "resource_type": {
+            "type": "string"
+        },
+        "row_id": {
+            "type": "string"
+        },
+        "birth_date": {
+            "type": "string"
+        },
+        "deceased": {
+            "type": "string"
+        },
+        "gender": {
+            "type": "string"
+        },
+        "deceased_datetime": {
+            "type": "null"
+        },
+        "nationality": {
+            "type": "string"
+        },
+        "religion": {
+            "type": "string"
+        },
+        "marital_status": {
+            "type": "string"
+        },
+        "identifier": {
+            "type": "array",
+            "properties":{
+                "type":{
+                    "type": "string"
+                },
+                "value":{
+                    "type": "string"
+                },
+                "facility":{
+                    "type": "string"
+                },
+                "start":{
+                    "type": "string"
+                },
+                "end":{
+                    "type": "string"
+                }
+            }
+        },
+        "address": {
+            "type": "array",
+            "properties":{
+                "district": {
+                    "type": "string"
+                },
+                "line": {
+                    "type": "string"
+                },
+                "state_desc": {
+                    "type": "string"
+                },
+                "country": {
+                    "type": "string"
+                },
+                "zipcode": {
+                    "type": "string"
+                },
+                "city": {
+                    "type": "string"
+                }
+            }
+        },
+        "communication": {
+            "type": "array",
+            "properties":{
+                "commu_language": {
+                    "type": "string"
+                },
+                "commu_preferred": {
+                    "type": "string"
+                }               
+            }
+        },
+        "contact": {
+            "type": "array",
+            "properties":{
+                "system": {
+                    "type": "string"
+                },
+                "value": {
+                    "type": "string"
+                }
+            }
+        },
+        "extension": {
+            "type": "array",
+            "properties":{
+                "vip_type": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

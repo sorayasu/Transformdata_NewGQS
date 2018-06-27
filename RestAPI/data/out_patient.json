@@ -1,0 +1,68 @@
+{
+    "resource_type": "Patient",
+    "row_id": "10",
+    "birth_date": "1975-04-15",
+    "deceased": "False",
+    "gender": "M",
+    "deceased_datetime": null,
+    "nationality": "TH",
+    "religion": "พุทธ (BUDDHISM)",
+    "marital_status": "โสด (Single)",
+    "identifier": [
+        {
+            "type": "MRN",
+            "value": "48-14-000010",
+            "facility": "048",
+            "start": "2014-09-30 19:51:52.373",
+            "end": null
+        },
+        {
+            "type": "NID",
+            "value": "3830100203814",
+            "facility": "038",
+            "start": "2011-06-07 00:00:00.0",
+            "end": "2018-04-14 00:00:00.0"
+        }
+    ],
+    "name": [
+        {
+            "suffix": null,
+            "prefix": "นาย",
+            "middle_name": null,
+            "family_name": "จงหมั่น",
+            "given_name": "สมพงษ์",
+            "language": "TH"
+        }
+    ],
+    "address": [
+        {
+            "district": "บางขุนเทียน",
+            "line": "113/77    รุ่งเพชรคอนโดมีเนียม  ซ.66 พระราม 2 ",
+            "state_desc": "กรุงเทพฯ",
+            "country": "THA",
+            "zipcode": "10150",
+            "city": "แสมดำ"
+        }
+    ],
+    "communication": [
+        {
+            "commu_language": "TH",
+            "commu_preferred": "True"
+        }
+    ],
+    "contact": [
+        {
+            "system": "phone",
+            "value": "0805201996"
+        },
+        {
+            "system": "email",
+            "value": "sompong.jo@glsict.com"
+        }
+    ],
+    "extension": [
+        {
+            "vip_type": null
+        }
+    ]
+}

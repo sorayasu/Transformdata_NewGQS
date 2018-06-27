@@ -1,0 +1,48 @@
+<html>
+    
+<head>
+    <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+</head>
+    
+<body>
+    
+    
+    <ul id="history">
+        
+        <li>Text 1</li>
+    </ul>
+    
+    <form>
+        <input name="txtbox" id="txtbox" placeholder="Please text something!">
+        <button type="button" onclick="sendmsg()">Send!</button>
+    </form>
+    
+</body>
+
+<script>
+    function appendmsg(msg){
+        $("#history").append(
+            '<li>' + 
+                msg +
+            '</li>'
+        )
+        
+    }
+    
+    function sendmsg(){
+        msg = $("#txtbox").val();
+        $.post("/chat", {"name": "{{req.params.name}}", "msg": msg})
+    }
+    
+    var exampleSocket = new WebSocket("ws://127.0.0.1:1880/ws/chat");
+    
+    exampleSocket.onmessage = function (event) {
+      data = JSON.parse(event.data)
+      appendmsg(data.name + ": " + data.msg);
+    }
+</script>
+  
+</html>

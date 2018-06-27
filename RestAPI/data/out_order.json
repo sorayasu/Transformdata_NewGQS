@@ -1,0 +1,252 @@
+{
+    "row_id": "423543",
+    "order_number": "1717227",
+    "encounter": "O48-15-015283",
+    "physician": "48CHK",
+    "OrderItem": 
+        {
+            "code": "A010",
+            "name": "Complete Blood Count"
+        }
+    ,
+    "OrderItemType": [
+        {
+            "identifier": "106336",
+            "identifier_type": "REQUESTDETAIL"
+        },
+        {
+            "identifier": "106337",
+            "identifier_type": "REQUESTDETAIL"
+        },
+        {
+            "identifier": "106338",
+            "identifier_type": "REQUESTDETAIL"
+        },
+        {
+            "identifier": "106339",
+            "identifier_type": "REQUESTDETAIL"
+        },
+        {
+            "identifier": "106340",
+            "identifier_type": "REQUESTDETAIL"
+        },
+        {
+            "identifier": "106341",
+            "identifier_type": "REQUESTDETAIL"
+        },
+        {
+            "identifier": "106342",
+            "identifier_type": "REQUESTDETAIL"
+        },
+        {
+            "identifier": "106343",
+            "identifier_type": "REQUESTDETAIL"
+        },
+        {
+            "identifier": "106344",
+            "identifier_type": "REQUESTDETAIL"
+        },
+        {
+            "identifier": "106345",
+            "identifier_type": "REQUESTDETAIL"
+        },
+        {
+            "identifier": "106346",
+            "identifier_type": "REQUESTDETAIL"
+        },
+        {
+            "identifier": "106347",
+            "identifier_type": "REQUESTDETAIL"
+        },
+        {
+            "identifier": "106348",
+            "identifier_type": "REQUESTDETAIL"
+        },
+        {
+            "identifier": "106349",
+            "identifier_type": "REQUESTDETAIL"
+        },
+        {
+            "identifier": "5717",
+            "identifier_type": "OrderCatalogItem"
+        },
+        {
+            "identifier": "6767",
+            "identifier_type": "OrderCatalogItem"
+        },
+        {
+            "identifier": "5716",
+            "identifier_type": "OrderCatalogItem"
+        },
+        {
+            "identifier": "5248",
+            "identifier_type": "OrderCatalogItem"
+        },
+        {
+            "identifier": "5422",
+            "identifier_type": "OrderCatalogItem"
+        },
+        {
+            "identifier": "6540",
+            "identifier_type": "OrderCatalogItem"
+        },
+        {
+            "identifier": "5149",
+            "identifier_type": "OrderCatalogItem"
+        },
+        {
+            "identifier": "1121",
+            "identifier_type": "OrderCatalogItem"
+        },
+        {
+            "identifier": "1138",
+            "identifier_type": "OrderCatalogItem"
+        },
+        {
+            "identifier": "6768",
+            "identifier_type": "OrderCatalogItem"
+        },
+        {
+            "identifier": "5276",
+            "identifier_type": "OrderCatalogItem"
+        },
+        {
+            "identifier": "5272",
+            "identifier_type": "OrderCatalogItem"
+        },
+        {
+            "identifier": "6425",
+            "identifier_type": "OrderCatalogItem"
+        },
+        {
+            "identifier": "106350",
+            "identifier_type": "REQUESTDETAIL"
+        },
+        {
+            "identifier": "106351",
+            "identifier_type": "REQUESTDETAIL"
+        },
+        {
+            "identifier": "1136",
+            "identifier_type": "OrderCatalogItem"
+        },
+        {
+            "identifier": "106544",
+            "identifier_type": "REQUESTDETAIL"
+        },
+        {
+            "identifier": "6494",
+            "identifier_type": "OrderCatalogItem"
+        },
+        {
+            "identifier": "1125",
+            "identifier_type": "OrderCatalogItem"
+        },
+        {
+            "identifier": "106629",
+            "identifier_type": "REQUESTDETAIL"
+        },
+        {
+            "identifier": "106632",
+            "identifier_type": "REQUESTDETAIL"
+        },
+        {
+            "identifier": "6496",
+            "identifier_type": "OrderCatalogItem"
+        }
+    ],
+    "OrderStatus": [
+        {
+            "code": "SAMPLCOL",
+            "display": "Specimen Collected"
+        },
+        {
+            "code": "RAISED",
+            "display": "Raised"
+        },
+        {
+            "code": "EXCUT",
+            "display": "Executed"
+        },
+        {
+            "code": "REVIW",
+            "display": "Reviewed"
+        },
+        {
+            "code": "CANCLD",
+            "display": "Cancelled"
+        }
+    ],
+    "OrderPeriod": [
+        {
+            "start": "2015-08-11 07:19:55.55",
+            "end": "2015-08-12 07:19:55.55"
+        },
+        {
+            "start": "2015-08-11 09:30:37.177",
+            "end": "2015-08-12 09:30:37.177"
+        },
+        {
+            "start": "2015-08-11 10:39:37.81",
+            "end": "2015-08-12 10:39:37.81"
+        },
+        {
+            "start": "2015-08-11 10:49:13.007",
+            "end": "2015-08-12 10:49:13.007"
+        },
+        {
+            "start": "2015-08-11 10:58:35.553",
+            "end": "2015-08-12 10:58:35.553"
+        },
+        {
+            "start": "2015-08-11 10:48:46.727",
+            "end": "2015-08-12 10:48:46.727"
+        },
+        {
+            "start": "2015-08-11 11:01:34.337",
+            "end": "2015-08-12 11:01:34.337"
+        },
+        {
+            "start": "2015-08-11 11:03:23.983",
+            "end": "2015-08-12 11:03:23.983"
+        },
+        {
+            "start": "2015-08-11 11:18:30.61",
+            "end": "2015-08-12 11:18:30.61"
+        },
+        {
+            "start": "2015-08-11 14:02:36.24",
+            "end": "2015-08-12 14:02:36.24"
+        }
+    ],
+    "OrderCategory": [
+        {
+            "code": "ORDCT1",
+            "display": "Lab"
+        },
+        {
+            "code": "1407",
+            "display": "เครื่องมือแพทย์ศูนย์หัวใจ"
+        },
+        {
+            "code": "1404",
+            "display": "เครื่องมือแพทย์ศูนย์ตา"
+        },
+        {
+            "code": "19",
+            "display": "ค่าแพทย์"
+        },
+        {
+            "code": "ORDCT2",
+            "display": "X-Ray"
+        },
+        {
+            "code": "12",
+            "display": "ค่าของใช้"
+        },
+        {
+            "code": "18",
+            "display": "ค่าบริการอื่นๆ"
+        }
+    ]
+}

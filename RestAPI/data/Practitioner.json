@@ -1,0 +1,32 @@
+[
+    {
+        "identifier__type": "employee_id+his_code",
+        "identifier__value": "048140361+048140361",
+        "specialty__specialty_code": 12,
+        "specialty__specialty_desc": "Anesthesiology",
+        "active": "True",
+        "name__title": null,
+        "name__given_name": "ศรินญา",
+        "name__middle_name": null,
+        "name__family_name": "จันทะวงศ์, พญ.",
+        "period__start_date": "2014-08-15 10:05:13.457",
+        "period__end_date": null,
+        "role__code": "CPTEN24",
+        "role__desc": "Medical Doctor",
+        "qualification__system": "BCONN",
+        "qualification__code": "Doctor",
+        "qualification__display": "Doctor",
+        "license": "28267",
+        "location__enloc_id_loc_system": "BCONN",
+        "location__enloc_id_loc_value": "48CAR",
+        "location__enloc_id_loc_type": "48CAR",
+        "location__enloc_id_loc_use": "official",
+        "location__enloc_phy_loc_system": "HL7",
+        "location__enloc_phy_loc_code": "wa",
+        "location__enloc_phy_loc_display": "Ward",
+        "location__enloc_loc_name": "Heart Center",
+        "location__enloc_loc_desc": "Execute",
+        "location__enloc_loc_addr": null
+    }
+]
+

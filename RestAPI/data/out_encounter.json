@@ -1,0 +1,66 @@
+{
+    "identifier": "E48-15-001215",
+    "status": "DISCH",
+    "class": "INPAT",
+    "type": "AEPAT",
+    "is_urgency": "True",
+    "admit_source": null,
+    "patient": "48-15-003475",
+    "service_provider_description": "Ward 5",
+    "service_provider": [
+        {
+            "code": "48W1",
+            "name": "Ward 5"
+        }
+    ],
+    "encounter_location": [
+        {
+            "start": null,
+            "enloc_id_loc_system": "BCONN",
+            "enloc_id_loc_value": "48W1",
+            "enloc_id_loc_type": "Location.Code",
+            "enloc_id_loc_use": "official",
+            "enloc_phy_loc_system": "HL7",
+            "enloc_phy_loc_code": "wa",
+            "enloc_phy_loc_display": "Ward",
+            "enloc_loc_name": "Ward 5",
+            "enloc_loc_desc": "Pac_Ward",
+            "enloc_loc_addr": null
+        }
+    ],
+    "period": [
+        {
+            "start": "2015-04-05 16:14:43.25",
+            "end": "2015-04-09 14:55:42.82"
+        }
+    ],
+    "participants": [
+        {
+            "practitioner": "048140522"
+        }
+    ],
+    "priority": [
+        {
+            "code": "3",
+            "display": "Yellow",
+            "system_source": "BCONN"
+        }
+    ],
+    "extension": [
+        {
+            "is_trauma": "True",
+            "medical_discharge_datetime": "2015-04-09 11:11:07.56",
+            "discharge_datetime": "2015-04-09 14:55:42.82",
+            "discharge_condition": "Improved",
+            "discharge_type": "With Approval"
+        }
+    ],
+    "identifier_list": [
+        {
+            "system": "BCONN",
+            "use": "official",
+            "type": "emergency",
+            "value": "E48-15-001215"
+        }
+    ]
+}
