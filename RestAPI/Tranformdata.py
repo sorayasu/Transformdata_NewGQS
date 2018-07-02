@@ -113,29 +113,6 @@ group_med = "contained__route__coding"
 #     ]
 
 
-# def transform_rawjson(data):
-#     raw_json = {}
-#     d = {}
-#     i = 0
-#     for d in data:
-#         for k,val in d.items():
-#             for s in formatt:
-#                 # print("k  " , k,"s    ",s)
-#                 if s in k:
-#                     x = k.split(s)
-#                     k = s +"__"+str(i)+x[1]
-#                     d = {k:val}
-#                     raw_json.update(d)
-#             d = {k:val}
-#             raw_json.update(d)                
-#         i = i+1
-#     # print(raw_json)
-#     data = unflatten_list(raw_json, separator='__')
-#     print(json.dumps(data))
-#     return json.dumps(data)
-
-# transform_rawjson(data)
-
 def get_raw_patient_json(query):
     try:
         raw_data = groupping(query)
@@ -177,26 +154,6 @@ def groupping(data):
         print("error", e)
         return data
     
-#             for s in formatt:
-#                 # print("k  " , k,"s    ",s)
-#                 if s in k:
-#                     x = k.split(s)
-#                     k = s +"__"+str(i)+x[1]
-#                     d = {k:val}
-#                     raw_json.update(d)
-#             d = {k:val}
-#             raw_json.update(d)    
-        # print("if")
-        # print(data[0][check_med])
-        # print("*******",data[i][check_med])
-        # a = check_med.pop()
-        # print("a    ",a)
-        # print("a    ",data[i][check_med])
-        # if data[i] in check_med:
-        #     print(data[i].value)
-        #     print(data[i])
-    #     a = data.pop(i)
-        # print("i   ",i)
 
 def flatten_json(data):
     data = addlist(unflatten_list(data, separator='__'))
@@ -228,29 +185,7 @@ def union(fundamental, addkey):
     # print("value   ",value[0])
     # print("8   ",value[0]['code'])
     if value[0] not in fundamental[key]:
-        # # print("8   ",value[0]['code']['coding'])
-        # try:
-        #     if fundamental['contained'][0]['code']['coding'][0]['code'] == value[0]['code']['coding'][0]['code']:
-        #     # group(fundamental,value[0])
-        #     # print("5   ",fundamental[key])
-        #     # print("6   "group(fundamental,value[0]))
-        #     # print("7   ",group(fundamental,value[0]))
-        #         fundamental[key] = [group(fundamental,value[0])]
-        #     # print("test    ",json.dumps(fundamental, indent=4, ensure_ascii=False))
-        #         return fundamental
-        # except Exception as e:
-        #     pass
-        #     # print("equ   ",fundamental[key])
-        # else : 
-        #     print("eieiei")
         fundamental[key].append(value[0])
-            # print("else    else",fundamental)
-        # a = fundamental['contained'][0]['code'][0]['coding'][0]['code']
-        # print(value[0]['code'][0]['coding'][0]['code'])
-        # b = fundamental['contained'][0]['code'][0]['coding'][0]['code']
-        # print(json.dumps(reduce(dict.get, config, fundamental)))
-        # fundamental[key].append(value[0])
-    # print("resu        ",fundamental)
     return fundamental
 
 def join_row(prev, current):
@@ -262,9 +197,3 @@ def join_row(prev, current):
 # result = get_raw_patient_json(data)
 # print(json.dumps(result, indent=4, ensure_ascii=False))
 # print(reduce(join_row, map(group_underscore_key, input_data)))
-
-# def test(data):
-#     # print(data['contained'])
-#     print(json.dumps(reduce(dict.get, config, data)))
-
-# test(dataa)
