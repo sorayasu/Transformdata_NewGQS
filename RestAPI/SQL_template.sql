@@ -651,3 +651,105 @@ SELECT
 from Login lg JOIN Careprovider cp ON lg.LoginName = cp.Code 
 WHERE lg.LoginName IS NOT NULL AND lg.LoginName != '' 
      AND cp.LicenseNo IS NOT NULL AND cp.LicenseNo != ''
+
+#diagnosis
+SELECT   
+	(SELECT TOP 1 ReferenceValue.ValueCode FROM ReferenceValue WHERE ReferenceValue.UID = pprob.SEVTYUID AND ReferenceValue.StatusFlag='A') severity__code,
+	(SELECT TOP 1 ReferenceValue.Description FROM ReferenceValue WHERE ReferenceValue.UID = pprob.SEVTYUID AND ReferenceValue.StatusFlag='A') severity__display,
+	'BCONN' severity__system,
+	CASE WHEN LEN(LTRIM(RTRIM(pprob.BodySite))) > 0 THEN pprob.BodySite ELSE NULL END bodysite__code,
+	CASE WHEN LEN(LTRIM(RTRIM(pprob.BodySite))) > 0 THEN pprob.BodySite ELSE NULL END bodysite__display,
+	'BCONN' bodysite__system,
+	pprob.RecordedDttm condition__asserted_date,
+	p.pasid condition__patient,
+	pvid.Identifier condition__encounter,
+	CASE WHEN pprob.statusFlag = 'A' AND pprob.ClosureDttm IS NULL THEN 'active' 
+		 WHEN pprob.statusFlag = 'A' AND pprob.ClosureDttm IS NOT NULL THEN 'resolved' 
+		 ELSE NULL 
+	END condition__clinical_status,
+	ISNULL((SELECT TOP 1 ReferenceValue.Description FROM ReferenceValue WHERE ReferenceValue.UID = pprob.CERTYUID AND ReferenceValue.StatusFlag='A'), 'unknown') condition__verification_status,
+	(SELECT TOP 1 ss_user.SSUSR_initials identifier FROM careprovider cp INNER JOIN Login login ON cp.uid = login.CareproviderUID INNER JOIN ss_user ss_user ON login.loginname = ss_user.SSUSR_initials WHERE cp.uid = pprob.RecordedBy) condition__asserter,
+	prob.code code__code,
+	prob.Name code__display,
+	(SELECT TOP 1 ReferenceValue.Description FROM ReferenceValue WHERE ReferenceValue.UID = prob.CDTYPUID AND ReferenceValue.StatusFlag='A') code__system,
+	pprob.OnsetDttm problem__onset_datetime,
+	NULL problem__onset_duration,
+	NULL problem__onset_unit,
+	(SELECT TOP 1 ReferenceValue.ValueCode FROM ReferenceValue WHERE ReferenceValue.UID = pprob.DIAGTYPUID AND ReferenceValue.StatusFlag='A') category__code,
+	(SELECT TOP 1 ReferenceValue.Description FROM ReferenceValue WHERE ReferenceValue.UID = pprob.DIAGTYPUID AND ReferenceValue.StatusFlag='A') category__display,
+	'BCONN' category__system,
+	'diagnosis' category__code,
+	'Diagnosis' category__display,
+	'HL7' category__system,
+	'BCONN'  identifier__system,
+	'PatientProblemUID'  identifier__type,
+	'official'  identifier__use,
+	CAST(pprob.uid AS VARCHAR(100))  identifier__value,
+	'Comment' note__title,
+	pprob.ClosureComments note__text 
+FROM PatientProblem pprob 
+	JOIN Problem prob ON pprob.ProblemUID = prob.uid 
+	JOIN Patient p ON p.uid = pprob.PatientUID 
+	JOIN PatientVisit pv ON pv.uid = pprob.PatientVisitUID 
+	JOIN PatientVisitId pvid ON pvid.PatientVisitUID = pv.uid 
+WHERE p.pasid = '09-02-025000' AND pvid.Identifier = 'O09-12-400307'
+
+
+
+
+#MEDICATION
+SELECT pa.paadm_admno                       context, 
+       oei.oeori_prn                        subject, 
+       'TC'                                 status_system, 
+       NULL                                 status_code, 
+       NULL                                 status_display, 
+       'TC'                                 identifiers__system, 
+       'OEORD_RowId'                        identifiers__type, 
+       'official'                           identifiers__use, 
+       Cast(oe.oeord_rowid AS VARCHAR(100)) identifiers__value, 
+       'Medication'							contained__resource_type,
+	   'TC'                                 contained__ingredient__coding__system, 
+       aim.arcim_generic_dr                 contained__ingredient__coding__code, 
+       aim.arcim_genericdesc                contained__ingredient__coding__display,
+       aim.arcim_genericdesc                contained__ingredient__text, 
+       'TC'                                 contained__code__coding_system, 
+       dm.phcd_code                         contained__code__coding__code, 
+       dm.phcd_name                         contained__code__coding__display,
+       dm.phcd_name                         contained__code__text,
+       NULL									contained__from,
+       'TC'                                 contained__route__coding__system, 
+       ar.admr_code                         contained__route__coding__code, 
+       ar.admr_desc                         contained__route__coding__display, 
+       ar.admr_desc                         contained__route__text, 
+       NULL									contained__method,
+       Ltrim(Rtrim(dm.phcd_labelname2))     contained__instruction_text, 
+       Ltrim(Rtrim(dm.phcd_labelname1))     contained__instruction_text_local, 
+       'TC'                                 info_status_system, 
+       oes.ostat_code                       info_status_code, 
+       oes.ostat_desc                       info_status_display, 
+       oei.oeori_labeltext                  patient_instruction, 
+       oei.oeori_phqtyord                   quantity, 
+       oei.oeori_doseqty                    dose_quantity 
+FROM   oe_order oe 
+       INNER JOIN oe_orditem oei 
+               ON oe.oeord_rowid = oei.oeori_oeord_parref 
+       INNER JOIN oec_orderstatus oes 
+               ON oes.ostat_rowid = oei.oeori_itemstat_dr 
+       INNER JOIN pa_adm pa 
+               ON pa.paadm_rowid = oe.oeord_adm_dr 
+       INNER JOIN arc_itmmast aim 
+               ON aim.arcim_rowid = oei.oeori_itmmast_dr 
+       INNER JOIN phc_drgmast dm 
+               ON aim.arcim_code = dm.phcd_code 
+       LEFT JOIN phc_generic gen 
+              ON dm.phcd_generic_dr = gen.phcge_rowid 
+       LEFT JOIN phc_instruc inst 
+              ON inst.phcin_rowid = oei.oeori_instr_dr 
+       LEFT JOIN phc_administrationroute ar 
+              ON ar.admr_rowid = oei.oeori_adminroute_dr 
+WHERE  oei.oeori_categ_dr = 1 
+       AND oei.oeori_billed = 'P' 
+       AND oes.ostat_code IN( 'E', 'V' ) 
+       AND pa.paadm_admno = 'I02-17-000021' 
+
+

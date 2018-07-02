@@ -1,0 +1,115 @@
+[
+    {
+        "resource_type": "MedicationDispense",
+        "id": "ea8fae4c-7849-11e8-ab6d-c4b30197d1d0",
+        "url": {
+            "reference": "/Medication/dispense/I02-17-000021"
+        },
+        "identifiers": [
+            {
+                "system": "TC",
+                "use": "official",
+                "type": "OEORD_RowId",
+                "value": "9251815"
+            }
+        ],
+        "status": null,
+        "subject": "02-17-000025",
+        "context": "I02-17-000021",
+        "contained": [
+            {
+                "resource_type": "Medication",
+                "id": "ea98501c-7849-11e8-8659-c4b30197d1d0",
+                "text": {
+                    "status": "generated",
+                    "div": "<div>Handi-C Hand Rub SOLUTION (240mL)</div>"
+                },
+                "code": {
+                    "coding": [
+                        {
+                            "system": "TC",
+                            "code": "51102707000059",
+                            "display": "Handi-C Hand Rub SOLUTION (240mL)"
+                        }
+                    ],
+                    "text": "Handi-C Hand Rub SOLUTION (240mL)"
+                },
+                "form": null,
+                "route": {
+                    "coding": [
+                        {
+                            "system": "BCONN",
+                            "code": "TOPI",
+                            "display": "Topical"
+                        },
+                        {
+                            "system": "TC",
+                            "code": "4",
+                            "display": "Topical"
+                        }
+                    ],
+                    "text": "Topical"
+                },
+                "method": null,
+                "instruction_text": "Handi-C Hand Rub SOLUTION (240mL)",
+                "instruction_text_local": null,
+                "ingredients": [
+                    {
+                        "coding": [
+                            {
+                                "system": "TC",
+                                "code": "1075",
+                                "display": "Alcohol"
+                            }
+                        ],
+                        "text": "Alcohol"
+                    }
+                ]
+            },
+            {
+                "resource_type": "Medication",
+                "id": "eaa27ac6-7849-11e8-ae89-c4b30197d1d0",
+                "text": {
+                    "status": "generated",
+                    "div": "<div>Terramycin Eye-Ointment </div>"
+                },
+                "code": {
+                    "coding": [
+                        {
+                            "system": "TC",
+                            "code": "MEETERR0000O",
+                            "display": "Terramycin Eye-Ointment "
+                        }
+                    ],
+                    "text": "Terramycin Eye-Ointment "
+                },
+                "form": null,
+                "route": {
+                    "coding": [
+                        {
+                            "system": "TC",
+                            "code": "35",
+                            "display": "Ophthalmic"
+                        }
+                    ],
+                    "text": "Ophthalmic"
+                },
+                "method": null,
+                "instruction_text": "(Do Not Use After Opening 1 Month)",
+                "instruction_text_local": "ไม่เก็บยาไว้เกิน 1 เดือน หลังเปิดขวดใช้แล้ว",
+                "ingredients": [
+                    {
+                        "coding": [
+                            {
+                                "system": "TC",
+                                "code": "539",
+                                "display": "Oxytetracycline (Oxylim)"
+                            }
+                        ],
+                        "text": "Oxytetracycline (Oxylim)"
+                    }
+                ]
+            }
+        ]
+    }
+]
