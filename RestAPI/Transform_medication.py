@@ -1,7 +1,7 @@
 import json
 from functools import reduce
 import requests
-from flatten_json import unflatten_list
+import RestAPI.transformutil as util
 
 formatt_list = ['code','route','text','organization']
 config = {"check_med" : "contained__code__coding__code","group_med" : "contained__route__coding"}
@@ -257,13 +257,12 @@ data = [
         "dose_quantity": "1"
     }
 ]
+transform_util = util.TransformUtil()
 
 def get_raw_medication_json(query):
     try:
         raw_data = groupping(query)
-        # print("gropping ",raw_data)
-        # result = reduce(join_row, map(flatten_json, raw_data))
-        result = reduce(join_row, map(flatten_json, raw_data))
+        result = reduce(transform_util.join_row, map(transform_util.flatten_json, raw_data))
     except Exception as e:
         print("error", e)
         result = {}
@@ -276,71 +275,49 @@ def groupping(data):
         d = l ={}
         # print("groupping",   raw_json)
         for i in range(len(data)-1):
-            if data[i][config['check_med']] == data[i+1][config['check_med']]:
+            # print((len(data)))
+            # print("raw   ", data[i][config['check_med']],   data[i + 1][config['check_med']])
+            if data[i][config['check_med']] == data[i + 1][config['check_med']]:
                 raw_json.pop()
-                # print("raw   ", raw_json)
-                for k,val in data[i].items():
-                    if data[i][k] == data[i+1][k] and group_med not in k:
-                        raw_data.update({k:val})
+                # print("raw   ", data[i][config['check_med']])
+                for k, v in data[i].items():
+                    if data[i][k] == data[i + 1][k] and group_med not in k:
+                        raw_data.update({k:v})
                         # print("raw_data    ", raw_data)
                     elif group_med in k :
-                        # print("else    ",k)
-                        x = k.split(group_med)
-                        # print(" 1 ",x)
-                        d = {config['group_med']+"__"+str(i)+x[1]:data[i][k]}
-                        l = {config['group_med']+"__"+str(i+1)+x[1]:data[i+1][k]}
-                        raw_data.update(d)
-                        raw_data.update(l)
+                        grouping_data(raw_data, k, group_med, i)
                 raw_json.append(raw_data)
-            else: raw_json.append(data[i+1])
+            else: 
+                raw_json.append(data[i+1])
         # print(raw_json)
         return raw_json
     except Exception as e:
         print("error", e)
         return data
-    
 
-def flatten_json(data):
-    # print("1     ", data )
-    # print("10    ",json.dumps(data))
-    data = addlist(unflatten_list(data, separator='__'))
-    # print("10    ",json.dumps(data))
-    return data
+def grouping_data(raw_data, key, group, index):
+    # print("else    ",k)
+    keys = key.split(group_med)
+    # ????
+    _group = config['group_med'] 
+    _index = "__" + index
+    _key = keys[1]
+    _value = data[index][key]
+    format_dict(_group, _index, _key, _value)
+    # ????
+    d = format_dict(_group, _index, _key, _value)
+    _index = "__" + (index + 1)
+    _value = data[index + 1][key]
+    l = format_dict(_group, _index, _key, _value)
 
+    raw_data.update(d)
+    raw_data.update(l)
+    # print(raw_data)
 
-def addlist(data):
-    # print("2   ", data )
-    for i, v in data.items():
-        if type(v) is dict and i not in formatt_list:
-            # print("v   ",i ,    v)
-            addlist(v) 
-            val = v
-            data[i] = list()
-            data[i].append(val)
-        elif type(v) is dict and i in formatt_list:
-                addlist(v) 
-                data[i] = dict()
-                data[i].update(v)
-    return data
+def format_dict(_group, _index, _key, _value):
+    # d = {"{}__{}{}".format(config['group_med'], i, x[1]:data[i][k])}
+    return {_group + _index + _key : _value}
 
-
-def union(fundamental, addkey):
-    key, value = addkey
-    # print("000",  key)
-    # print("key   ",fundamental[key])
-    # print("00   ",fundamental['contained'][0]['code'])
-    # print("value   ",value[0])
-    # print("8   ",value[0]['code'])
-    if value[0] not in fundamental[key]:
-        fundamental[key].append(value[0])
-    return fundamental
-
-def join_row(prev, current):
-    # print("curr   ",current.items())
-    dataobject = filter(lambda item: isinstance(item[1], list), current.items())
-    # print("list   ", list(dataobject))
-    return reduce(union, dataobject, prev)
-
-# result = get_raw_medication_json(data)
+result = get_raw_medication_json(data)
 # print(json.dumps(result, indent=4, ensure_ascii=False))
 # print(reduce(join_row, map(group_underscore_key, input_data)))
