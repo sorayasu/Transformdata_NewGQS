@@ -40,7 +40,9 @@ from rest_framework.urlpatterns import *
 urlpatterns = [
     # api
     url(r'^Patient/(?P<type>[A-Z]+)/(?P<val>[0-9a-z\-]+)$', PatientTest.as_view()),
-    url(r'^Query_api$', PatientTest.as_view())
+    url(r'^Query_api/(?P<type>b-connect)/(?P<val>diagnosis)$', PatientTest.as_view()),
+    url(r'^Query_api/(?P<type>trackcare)/(?P<val>medication)$', PatientTest.as_view()),
+    url(r'^Query_api/(?P<type>[0-9a-z\-]+)/(?P<val>[0-9a-z\-]+)$', PatientTest.as_view())
     # url(r'^Patient/(?P<name>[a-z]+),(?P<active>[a-z]+),(?P<telecom>[a-z]+),(?P<gender>[a-z]+),(?P<active>[a-z]+)', PatientTest.as_view()),
     # url(r'^api/v1/posts/(?P<pk>[0-9]+)$', 'post_element')
 ]

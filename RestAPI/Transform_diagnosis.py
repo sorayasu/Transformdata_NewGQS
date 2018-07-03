@@ -4,17 +4,17 @@ import requests
 from flatten_json import unflatten_list
 
 formatt_list = ['code','route','text','organization']
+format_list_null = ['note']
 
-def get_raw_patient_json(query):
+def get_raw_diagnosis_json(query):
     try:
-        # result = reduce(join_row, map(flatten_json, raw_data))
         result = reduce(join_row, map(flatten_json, query))
+        # print(json.dumps(result, indent=4, ensure_ascii=False))
         # print(len(result))
     except Exception as e:
         print("error", e)
         result = {}
-    return result
-    
+    return result.get('data')
 
 def flatten_json(data):
     # print("1     ", data )
@@ -37,6 +37,8 @@ def addlist(data):
                 addlist(v) 
                 data[i] = dict()
                 data[i].update(v)
+        elif i in format_list_null:
+                data[i] = list()
     return data
 
 

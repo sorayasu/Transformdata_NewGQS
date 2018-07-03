@@ -10,6 +10,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from RestAPI.Tranformdata import get_raw_patient_json
+from RestAPI.Transform_medication import get_raw_medication_json
+from RestAPI.Transform_diagnosis import get_raw_diagnosis_json
 import requests
 
 
@@ -20,13 +22,20 @@ class PatientTest(APIView):
         serializer = PatientSerializer(posts1, many=False)
         return Response(serializer.data)
 
-    def post(self, request):
+    def post(self, request,type,val):
+        print(type,val)
         data = request.body
-        site = 'his_b-connect'
+        site = "his_" + type
         # site = 'his_trakcare'
         URL_API = "http://localhost:10011/new/"+site
         queryAPI = requests.post(URL_API,data,headers={"content-type": "text/plain"}) #MIME
-        result = get_raw_patient_json(queryAPI.json())
+        if val == "medication":
+            # print("Medication")
+            result = get_raw_medication_json(queryAPI.json())
+        elif val == "diagnosis":
+            # print("diagnosis")
+            result = get_raw_diagnosis_json(queryAPI.json())
+        else: result = get_raw_patient_json(queryAPI.json())
         # serializer = PatientSerializer(data=data)
         # if serializer.is_valid():
         #     patient = serializer.save()
@@ -35,4 +44,4 @@ class PatientTest(APIView):
         # else:
         #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return Response(result)
-        # return Response("True")
+        
