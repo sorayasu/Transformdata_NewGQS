@@ -22,8 +22,8 @@ class PatientTest(APIView):
 
     def post(self, request):
         data = request.body
-        # site = 'his_b-connect'
-        site = 'his_trakcare'
+        site = 'his_b-connect'
+        # site = 'his_trakcare'
         URL_API = "http://localhost:10011/new/"+site
         queryAPI = requests.post(URL_API,data,headers={"content-type": "text/plain"}) #MIME
         result = get_raw_patient_json(queryAPI.json())

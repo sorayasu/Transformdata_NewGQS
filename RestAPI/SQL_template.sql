@@ -653,47 +653,45 @@ WHERE lg.LoginName IS NOT NULL AND lg.LoginName != ''
      AND cp.LicenseNo IS NOT NULL AND cp.LicenseNo != ''
 
 #diagnosis
-SELECT   
-	(SELECT TOP 1 ReferenceValue.ValueCode FROM ReferenceValue WHERE ReferenceValue.UID = pprob.SEVTYUID AND ReferenceValue.StatusFlag='A') severity__code,
-	(SELECT TOP 1 ReferenceValue.Description FROM ReferenceValue WHERE ReferenceValue.UID = pprob.SEVTYUID AND ReferenceValue.StatusFlag='A') severity__display,
-	'BCONN' severity__system,
-	CASE WHEN LEN(LTRIM(RTRIM(pprob.BodySite))) > 0 THEN pprob.BodySite ELSE NULL END bodysite__code,
-	CASE WHEN LEN(LTRIM(RTRIM(pprob.BodySite))) > 0 THEN pprob.BodySite ELSE NULL END bodysite__display,
-	'BCONN' bodysite__system,
-	pprob.RecordedDttm condition__asserted_date,
-	p.pasid condition__patient,
-	pvid.Identifier condition__encounter,
+SELECT
+	(SELECT TOP 1 ReferenceValue.ValueCode FROM ReferenceValue WHERE ReferenceValue.UID = pprob.SEVTYUID AND ReferenceValue.StatusFlag='A') data__severity,
+	'null' data__body_site,
+	pprob.RecordedDttm data__asserted_date,
+	p.pasid data__patient,
+	pvid.Identifier data__encounter,
 	CASE WHEN pprob.statusFlag = 'A' AND pprob.ClosureDttm IS NULL THEN 'active' 
 		 WHEN pprob.statusFlag = 'A' AND pprob.ClosureDttm IS NOT NULL THEN 'resolved' 
 		 ELSE NULL 
-	END condition__clinical_status,
-	ISNULL((SELECT TOP 1 ReferenceValue.Description FROM ReferenceValue WHERE ReferenceValue.UID = pprob.CERTYUID AND ReferenceValue.StatusFlag='A'), 'unknown') condition__verification_status,
-	(SELECT TOP 1 ss_user.SSUSR_initials identifier FROM careprovider cp INNER JOIN Login login ON cp.uid = login.CareproviderUID INNER JOIN ss_user ss_user ON login.loginname = ss_user.SSUSR_initials WHERE cp.uid = pprob.RecordedBy) condition__asserter,
-	prob.code code__code,
-	prob.Name code__display,
-	(SELECT TOP 1 ReferenceValue.Description FROM ReferenceValue WHERE ReferenceValue.UID = prob.CDTYPUID AND ReferenceValue.StatusFlag='A') code__system,
-	pprob.OnsetDttm problem__onset_datetime,
-	NULL problem__onset_duration,
-	NULL problem__onset_unit,
-	(SELECT TOP 1 ReferenceValue.ValueCode FROM ReferenceValue WHERE ReferenceValue.UID = pprob.DIAGTYPUID AND ReferenceValue.StatusFlag='A') category__code,
-	(SELECT TOP 1 ReferenceValue.Description FROM ReferenceValue WHERE ReferenceValue.UID = pprob.DIAGTYPUID AND ReferenceValue.StatusFlag='A') category__display,
-	'BCONN' category__system,
-	'diagnosis' category__code,
-	'Diagnosis' category__display,
-	'HL7' category__system,
-	'BCONN'  identifier__system,
-	'PatientProblemUID'  identifier__type,
-	'official'  identifier__use,
-	CAST(pprob.uid AS VARCHAR(100))  identifier__value,
-	'Comment' note__title,
-	pprob.ClosureComments note__text 
+	END data__clinical_status,
+	ISNULL((SELECT TOP 1 ReferenceValue.Description FROM ReferenceValue WHERE ReferenceValue.UID = pprob.CERTYUID AND ReferenceValue.StatusFlag='A'), 'unknown') data__verification_status,
+	(SELECT TOP 1 ss_user.SSUSR_initials identifier FROM careprovider cp INNER JOIN Login login ON cp.uid = login.CareproviderUID INNER JOIN ss_user ss_user ON login.loginname = ss_user.SSUSR_initials WHERE cp.uid = pprob.RecordedBy) data__asserter,
+	prob.code data__codes__code__coding__code,
+	prob.Name data__codes__code__coding__display,
+	(SELECT TOP 1 ReferenceValue.Description FROM ReferenceValue WHERE ReferenceValue.UID = prob.CDTYPUID AND ReferenceValue.StatusFlag='A') data__codes__code__coding__system,
+	prob.Name data__codes__code__text,
+	pprob.OnsetDttm data__code__onset_datetime,
+	NULL data__code__onset_duration,
+	NULL data__code__onset_unit,
+	(SELECT TOP 1 ReferenceValue.ValueCode FROM ReferenceValue WHERE ReferenceValue.UID = pprob.DIAGTYPUID AND ReferenceValue.StatusFlag='A') data__category__0__category__coding__code,
+	(SELECT TOP 1 ReferenceValue.Description FROM ReferenceValue WHERE ReferenceValue.UID = pprob.DIAGTYPUID AND ReferenceValue.StatusFlag='A') data__category__0__category__coding__display,
+	'BCONN' data__category__0__category__coding__system,
+	(SELECT TOP 1 ReferenceValue.Description FROM ReferenceValue WHERE ReferenceValue.UID = pprob.DIAGTYPUID AND ReferenceValue.StatusFlag='A') data__category__0__category__text,
+	'diagnosis' data__category__1__category__coding__code,
+	'Diagnosis' data__category__1__category__coding__display,
+	'HL7' data__category__1__category__coding__system,
+	'Diagnosis' data__category__1__category__text,
+	'BCONN'  data__identifier__system,
+	'PatientProblemUID'  data__identifier__type,
+	'official'  data__identifier__use,
+	CAST(pprob.uid AS VARCHAR(100))  data__identifier__value,
+	'Comment' data__note__title,
+    pprob.ClosureComments data__note__text
 FROM PatientProblem pprob 
 	JOIN Problem prob ON pprob.ProblemUID = prob.uid 
 	JOIN Patient p ON p.uid = pprob.PatientUID 
 	JOIN PatientVisit pv ON pv.uid = pprob.PatientVisitUID 
 	JOIN PatientVisitId pvid ON pvid.PatientVisitUID = pv.uid 
-WHERE p.pasid = '09-02-025000' AND pvid.Identifier = 'O09-12-400307'
-
+WHERE p.pasid = '48-14-000019' AND pvid.Identifier = 'O48-14-000010'
 
 
 
