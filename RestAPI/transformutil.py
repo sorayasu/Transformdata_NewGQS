@@ -26,6 +26,9 @@ class TransformUtil:
                     self.addlist(v) 
                     data[i] = dict()
                     data[i].update(v)
+            elif i in format_list_null:
+                data[i] = list()
+                # data[i].append(val)
         return data
 
     def union(self,fundamental, addkey):

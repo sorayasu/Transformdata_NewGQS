@@ -4,9 +4,8 @@ import requests
 from flatten_json import unflatten_list
 import RestAPI.transformutil as util
 
-transform_util = util.TransformUtil()
-
 def get_raw_diagnosis_json(query):
+    transform_util = util.TransformUtil()
     try:
         result = reduce(transform_util.join_row, map(transform_util.flatten_json, query))
     except Exception as e:

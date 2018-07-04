@@ -23,19 +23,17 @@ class PatientTest(APIView):
         return Response(serializer.data)
 
     def post(self, request,type,val):
-        print(type,val)
+        # print(type,val)
         data = request.body
         site = "his_" + type
-        # site = 'his_trakcare'
         URL_API = "http://localhost:10011/new/"+site
         queryAPI = requests.post(URL_API,data,headers={"content-type": "text/plain"}) #MIME
         if val == "medication":
-            # print("Medication")
             result = get_raw_medication_json(queryAPI.json())
         elif val == "diagnosis":
-            # print("diagnosis")
             result = get_raw_diagnosis_json(queryAPI.json())
         else: result = get_raw_patient_json(queryAPI.json())
+
         # serializer = PatientSerializer(data=data)
         # if serializer.is_valid():
         #     patient = serializer.save()

@@ -51,6 +51,37 @@ data = [
         "identifiers__value": "9251815",
         "contained__resource_type": "Medication",
         "contained__ingredient__coding__system": "TC",
+        "contained__ingredient__coding__code": 1075,
+        "contained__ingredient__coding__display": "Alcohol",
+        "contained__code__coding__system": "TC",
+        "contained__code__coding__code": "51102707000059",
+        "contained__code__coding__display": "Handi-C Hand Rub SOLUTION (240mL)",
+        "contained__from": None,
+        "contained__route__coding__system": "Bconnect",
+        "contained__route__coding__code": "4",
+        "contained__route__coding__display": "Topical",
+        "contained__method": None,
+        "contained__instruction_text": "Handi-C Hand Rub SOLUTION (240mL)",
+        "contained__instruction_text_local": None,
+        "info_status_system": "TC",
+        "info_status_code": "V",
+        "info_status_display": "Verified",
+        "patient_instruction": None,
+        "quantity": 1,
+        "dose_quantity": "1"
+    },
+    {
+        "context": "I02-17-000021",
+        "subject": "02-17-000025",
+        "status_system": "TC",
+        "status_code": None,
+        "status_display": None,
+        "identifiers__system": "TC",
+        "identifiers__type": "OEORD_RowId",
+        "identifiers__use": "official",
+        "identifiers__value": "9251815",
+        "contained__resource_type": "Medication",
+        "contained__ingredient__coding__system": "TC",
         "contained__ingredient__coding__code": 539,
         "contained__ingredient__coding__display": "Oxytetracycline (Oxylim)",
         "contained__code__coding__system": "TC",
@@ -257,6 +288,7 @@ data = [
         "dose_quantity": "1"
     }
 ]
+
 transform_util = util.TransformUtil()
 
 def get_raw_medication_json(query):
@@ -273,43 +305,38 @@ def groupping(data):
         raw_json = [data[0]]
         raw_data = {}
         d = l ={}
-        # print("groupping",   raw_json)
+        group_med = config['group_med']
         for i in range(len(data)-1):
-            # print((len(data)))
-            # print("raw   ", data[i][config['check_med']],   data[i + 1][config['check_med']])
             if data[i][config['check_med']] == data[i + 1][config['check_med']]:
                 raw_json.pop()
-                # print("raw   ", data[i][config['check_med']])
                 for k, v in data[i].items():
                     if data[i][k] == data[i + 1][k] and group_med not in k:
                         raw_data.update({k:v})
-                        # print("raw_data    ", raw_data)
                     elif group_med in k :
                         grouping_data(raw_data, k, group_med, i)
                 raw_json.append(raw_data)
             else: 
                 raw_json.append(data[i+1])
-        # print(raw_json)
         return raw_json
     except Exception as e:
         print("error", e)
         return data
 
-def grouping_data(raw_data, key, group, index):
-    # print("else    ",k)
+def grouping_data(raw_data, key, group_med, index):
     keys = key.split(group_med)
-    # ????
-    _group = config['group_med'] 
-    _index = "__" + index
+    print("group_med    ",group_med)
+    # set format index key
+    _group = group_med
+    _index = "__" + str(index)
     _key = keys[1]
     _value = data[index][key]
     format_dict(_group, _index, _key, _value)
-    # ????
+    # add index key
     d = format_dict(_group, _index, _key, _value)
-    _index = "__" + (index + 1)
+    _index = "__" + str(index + 1)
     _value = data[index + 1][key]
     l = format_dict(_group, _index, _key, _value)
-
+    #update dict
     raw_data.update(d)
     raw_data.update(l)
     # print(raw_data)
@@ -319,5 +346,5 @@ def format_dict(_group, _index, _key, _value):
     return {_group + _index + _key : _value}
 
 result = get_raw_medication_json(data)
-# print(json.dumps(result, indent=4, ensure_ascii=False))
+print(json.dumps(result, indent=4, ensure_ascii=False))
 # print(reduce(join_row, map(group_underscore_key, input_data)))
