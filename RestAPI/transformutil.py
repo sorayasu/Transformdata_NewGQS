@@ -11,7 +11,6 @@ class TransformUtil:
         return data
 
     def addlist(self,data):
-        print('format_unlist', self.config['format_unlist'])
         for i, v in data.items():
             if type(v) is dict and i not in self.config['format_unlist']:
                 self.addlist(v) 
