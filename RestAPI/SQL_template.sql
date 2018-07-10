@@ -640,7 +640,7 @@ LEFT JOIN PatientOtherContact poc ON poc.patientuid = p.uid AND poc.statusflag =
 WHERE pid.identifier <> '' AND p.pasid = '48-14-000010'
 
 
-
+#hisuser
 SELECT 
         lg.LoginName username,
         lg.Password password,

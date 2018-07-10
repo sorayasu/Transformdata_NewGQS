@@ -2,6 +2,7 @@ import json
 from functools import reduce
 import requests
 import RestAPI.transformutil as util
+import RestAPI.Tranformdata as config
 
 formatt_list = ['code','route','text','organization']
 config = {"check_med" : "contained__code__coding__code","group_med" : "contained__route__coding"}
@@ -27,37 +28,6 @@ data = [
         "contained__code__coding__display": "Handi-C Hand Rub SOLUTION (240mL)",
         "contained__from": None,
         "contained__route__coding__system": "TC",
-        "contained__route__coding__code": "4",
-        "contained__route__coding__display": "Topical",
-        "contained__method": None,
-        "contained__instruction_text": "Handi-C Hand Rub SOLUTION (240mL)",
-        "contained__instruction_text_local": None,
-        "info_status_system": "TC",
-        "info_status_code": "V",
-        "info_status_display": "Verified",
-        "patient_instruction": None,
-        "quantity": 1,
-        "dose_quantity": "1"
-    },
-    {
-        "context": "I02-17-000021",
-        "subject": "02-17-000025",
-        "status_system": "TC",
-        "status_code": None,
-        "status_display": None,
-        "identifiers__system": "TC",
-        "identifiers__type": "OEORD_RowId",
-        "identifiers__use": "official",
-        "identifiers__value": "9251815",
-        "contained__resource_type": "Medication",
-        "contained__ingredient__coding__system": "TC",
-        "contained__ingredient__coding__code": 1075,
-        "contained__ingredient__coding__display": "Alcohol",
-        "contained__code__coding__system": "TC",
-        "contained__code__coding__code": "51102707000059",
-        "contained__code__coding__display": "Handi-C Hand Rub SOLUTION (240mL)",
-        "contained__from": None,
-        "contained__route__coding__system": "Bconnect",
         "contained__route__coding__code": "4",
         "contained__route__coding__display": "Topical",
         "contained__method": None,
@@ -289,62 +259,58 @@ data = [
     }
 ]
 
-transform_util = util.TransformUtil()
-
-def get_raw_medication_json(query):
+def get_raw_medication_json(query,config):
+    transform_util = util.TransformUtil()
     try:
-        raw_data = groupping(query)
-        result = reduce(transform_util.join_row, map(transform_util.flatten_json, raw_data))
+        # query = groupping(query)
+        result = reduce(transform_util.join_row, map(transform_util.flatten_json, query))
     except Exception as e:
         print("error", e)
         result = {}
     return result
 
-def groupping(data):
-    try:
-        raw_json = [data[0]]
-        raw_data = {}
-        d = l ={}
-        group_med = config['group_med']
-        for i in range(len(data)-1):
-            if data[i][config['check_med']] == data[i + 1][config['check_med']]:
-                raw_json.pop()
-                for k, v in data[i].items():
-                    if data[i][k] == data[i + 1][k] and group_med not in k:
-                        raw_data.update({k:v})
-                    elif group_med in k :
-                        grouping_data(raw_data, k, group_med, i)
-                raw_json.append(raw_data)
-            else: 
-                raw_json.append(data[i+1])
-        return raw_json
-    except Exception as e:
-        print("error", e)
-        return data
+# def groupping(data):
+#     try:
+#         raw_json = [data[0]]
+#         raw_data = {}
+#         d = l ={}
+#         group_med = config['group_med']
+#         for i in range(len(data)-1):
+#             if data[i][config['check_med']] == data[i + 1][config['check_med']]:
+#                 raw_json.pop()
+#                 for k, v in data[i].items():
+#                     if data[i][k] == data[i + 1][k] and group_med not in k:
+#                         raw_data.update({k:v})
+#                     elif group_med in k :
+#                         grouping_data(raw_data, k, group_med, i)
+#                 raw_json.append(raw_data)
+#             else: 
+#                 raw_json.append(data[i+1])
+#         return raw_json
+#     except Exception as e:
+#         print("error", e)
+#         return data
 
-def grouping_data(raw_data, key, group_med, index):
-    keys = key.split(group_med)
-    print("group_med    ",group_med)
-    # set format index key
-    _group = group_med
-    _index = "__" + str(index)
-    _key = keys[1]
-    _value = data[index][key]
-    format_dict(_group, _index, _key, _value)
-    # add index key
-    d = format_dict(_group, _index, _key, _value)
-    _index = "__" + str(index + 1)
-    _value = data[index + 1][key]
-    l = format_dict(_group, _index, _key, _value)
-    #update dict
-    raw_data.update(d)
-    raw_data.update(l)
-    # print(raw_data)
+# def grouping_data(raw_data, key, group_med, index):
+#     keys = key.split(group_med)
+#     # set format index key
+#     _group = group_med
+#     _index = "__" + str(index)
+#     _key = keys[1]
+#     _value = data[index][key]
+#     format_dict(_group, _index, _key, _value)
+#     # add index key
+#     d = format_dict(_group, _index, _key, _value)
+#     _index = "__" + str(index + 1)
+#     _value = data[index + 1][key]
+#     l = format_dict(_group, _index, _key, _value)
+#     #update dict
+#     raw_data.update(d)
+#     raw_data.update(l)
 
-def format_dict(_group, _index, _key, _value):
-    # d = {"{}__{}{}".format(config['group_med'], i, x[1]:data[i][k])}
-    return {_group + _index + _key : _value}
+# def format_dict(_group, _index, _key, _value):
+#     # d = {"{}__{}{}".format(config['group_med'], i, x[1]:data[i][k])}
+#     return {_group + _index + _key : _value}
 
-result = get_raw_medication_json(data)
-print(json.dumps(result, indent=4, ensure_ascii=False))
-# print(reduce(join_row, map(group_underscore_key, input_data)))
+# result = get_raw_medication_json(data)
+# print(json.dumps(result, indent=4, ensure_ascii=False))
