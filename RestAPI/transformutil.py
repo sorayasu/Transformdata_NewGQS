@@ -3,6 +3,7 @@ import json
 from functools import reduce
 
 class TransformUtil:
+
     def __init__(self, config):
         self.config = config
 
@@ -12,8 +13,11 @@ class TransformUtil:
 
     def addlist(self,data):
         for i, v in data.items():
-            if type(v) is dict and i not in self.config['format_unlist']:
-                self.addlist(v) 
+            if type(v) == list:
+                a = map(self.addlist,v)
+                list(a)
+            elif type(v) is dict and i not in self.config['format_unlist']:
+                self.addlist(v)
                 val = v
                 data[i] = list()
                 data[i].append(val)
@@ -26,6 +30,7 @@ class TransformUtil:
         return data
 
     def union(self,fundamental, addkey):
+        # print("--- in ---",    fundamental," ++++ key ++++ ",    addkey)
         key, value = addkey
         if value[0] not in fundamental[key]:
             fundamental[key].append(value[0])

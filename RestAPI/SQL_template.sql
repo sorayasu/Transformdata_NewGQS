@@ -325,6 +325,8 @@ from BDMSReferralMaster brm JOIN Patient p ON p.UID = brm.PatientUID
 WHERE brm.StatusFlag ='A' 
 	AND p.PASID = '48-15-003475' AND pvid.identifier = 'E48-15-001215'
 
+
+#encounter
 select 
 			pvid.identifier identifier,
             rf_status.valuecode status,
@@ -693,7 +695,7 @@ FROM PatientProblem pprob
 	JOIN PatientVisitId pvid ON pvid.PatientVisitUID = pv.uid 
 WHERE p.pasid = '48-14-000019' AND pvid.Identifier = 'O48-14-000010'
 
-
+#O04-14-116766
 
 #MEDICATION
 SELECT pa.paadm_admno                       context, 
