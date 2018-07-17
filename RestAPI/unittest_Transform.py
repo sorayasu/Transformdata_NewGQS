@@ -1,7 +1,6 @@
 import os.path
 import unittest
 from unittest.mock import patch
-import random
 import transformutil
 
 config = {"format_unlist":["category"],"format_list_null":[]}

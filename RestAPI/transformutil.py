@@ -1,6 +1,6 @@
 from flatten_json import unflatten_list
-import json
 from functools import reduce
+import json
 import logging
 
 logger = logging.getLogger(__name__)

@@ -1,9 +1,5 @@
-import json
 from functools import reduce
-import requests
-from flatten_json import unflatten_list
 import RestAPI.transformutil as util
-import logging
 
 
 def get_raw_patient_json(query,config):
