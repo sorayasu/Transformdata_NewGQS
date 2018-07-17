@@ -1,6 +1,10 @@
 from flatten_json import unflatten_list
 import json
 from functools import reduce
+import logging
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.DEBUG)
 
 class TransformUtil:
 
@@ -8,8 +12,13 @@ class TransformUtil:
         self.config = config
 
     def flatten_json(self, data):
-        data = self.addlist(unflatten_list(data, separator='__'))
-        return data
+        try:
+            data = self.addlist(unflatten_list(data, separator='__'))
+            return data
+        except Exception as e:
+            logger.debug(' SQL Error OR %s', e)
+            result =  {} 
+            return result  
 
     def addlist(self,data):
         for i, v in data.items():
