@@ -2,7 +2,7 @@
 import os, sys, django, json
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from RestAPI.utils.Tranformdata import get_raw_data_json
+from RestAPI.utils.tranformdata import get_raw_data_json
 import requests
 import logging
 

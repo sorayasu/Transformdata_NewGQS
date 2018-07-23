@@ -2,7 +2,7 @@ import json
 from functools import reduce
 import requests
 import RestAPI.utils.transformutil as util
-import RestAPI.utils.Tranformdata as config
+import RestAPI.utils.tranformdata as config
 
 formatt_list = ['code','route','text','organization']
 config = {"check_med" : "contained__code__coding__code","group_med" : "contained__route__coding"}
