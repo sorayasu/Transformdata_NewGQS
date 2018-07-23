@@ -17,15 +17,15 @@ class TransformUtil:
             data = self.addlist(unflatten_list(data, separator='__'))
             return data  
         except Exception as e:
-            logger.debug(' SQL Error OR %s', e)
-            
+            logger.error(str( e))
+            raise Exception("SQL Error") 
 
     def addlist(self,data):
         logger.info("start addlist")
         for i, v in data.items():
             if type(v) == list:
                 logger.debug('typt : %s',type(v))
-                a = map(self.addlist,v)
+                a = map(self.addlist, v)
                 list(a)
             elif type(v) is dict and i not in self.config['format_unlist']:
                 logger.debug('typt : %s',type(v))
@@ -55,13 +55,11 @@ class TransformUtil:
         dataobject = filter(lambda item: isinstance(item[1], list), current.items())
         return reduce(self.union, dataobject, prev)
 
-    def groupping(self,data):
-        logger.info('start groupping')
+    def grouping(self,data):
+        logger.info('start grouping')
         try:
-            # print('group', self.config['group']['check_med'])
             raw_json = [data[0]]
-            raw_data = {}
-            d = l ={}
+            raw_data = d = l = dict()
             group_med = self.config['group']['group_unique_key']
             for i in range(len(data)-1):
                 if data[i][self.config['group']['unique_key']] == data[i + 1][self.config['group']['unique_key']]:
@@ -76,26 +74,21 @@ class TransformUtil:
                     raw_json.append(data[i+1])
             return raw_json
         except Exception as e:
-            print("error", e)
             return data
 
     def grouping_data(self,raw_data, key, group_med, index):
         keys = key.split(group_med)
-        # set format index key
         _group = group_med
         _index = "__" + str(index)
         _key = keys[1]
         _value = data[index][key]
         format_dict(_group, _index, _key, _value)
-        # add index key
         d = format_dict(_group, _index, _key, _value)
         _index = "__" + str(index + 1)
         _value = data[index + 1][key]
         l = format_dict(_group, _index, _key, _value)
-        #update dict
         raw_data.update(d)
         raw_data.update(l)
 
     def format_dict(_group, _index, _key, _value):
-        # d = {"{}__{}{}".format(config['group_med'], i, x[1]:data[i][k])}
         return {_group + _index + _key : _value}

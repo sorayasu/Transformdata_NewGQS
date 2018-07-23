@@ -15,7 +15,7 @@ context_path = "new"
 
 class QueryService(APIView):
     def post(self, request):
-        logger.debug('start paient post')
+        logger.debug('start query')
         raw = request.data
         logger.debug('raw data from POST : %s', raw)
         try:
@@ -24,14 +24,13 @@ class QueryService(APIView):
             site = raw['adapter']   
             url_api =   "http://{}:{}/{}/{}".format(host,port,context_path,site)
             logger.info('call to site %s',site)
-            queryAPI = requests.post(url_api,query)
-            logger.info('call to site %s',queryAPI)
+            queryAPI = requests.post(url_api,query,timeout=10)
             result = get_raw_data_json(queryAPI.json(),config)
             result.update({"message":"query success"})
             logger.info('result data : %s',result)
         except Exception as e:
-            logger.debug(' Error to : %s', e)
-            result =  {"data": [], "message":"query fail"} 
+            logger.error(' Error to : %s', e)
+            result =  {"data": [], "message": str(e)} 
         return Response(result)  
 
         
