@@ -25,6 +25,7 @@ class QueryService(APIView):
             url_api =   "http://{}:{}/{}/{}".format(host,port,context_path,site)
             logger.info('call to site %s',site)
             queryAPI = requests.post(url_api,query,timeout=10)
+            logger.info('response to api %s',queryAPI.json())
             result = get_raw_data_json(queryAPI.json(),config)
             result.update({"message":"query success"})
             logger.info('result data : %s',result)
